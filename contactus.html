@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Spotify Green Theme</title>
+    <style>
+        /* CSS Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000; 
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #000000;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #1DB954; 
+        }
+
+        header h1 {
+            color: #1DB954; 
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #1DB954;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #1DB954;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .contact-item {
+            margin: 20px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .contact-item h3 {
+            color: #1DB954;
+            margin-bottom: 10px;
+        }
+
+        .contact-item p {
+            font-size: 1.1em;
+        }
+
+        form {
+            background-color: #121212; 
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #1DB954;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #1e1e1e;
+            border: 1px solid #1DB954;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1em;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1DB954;
+            box-shadow: 0 0 5px #1DB954;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #1DB954;
+            color: #000000;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #1ed760; /* Lighter green on hover */
+        }
+
+        footer {
+            background-color: #000000;
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #1DB954;
+            margin-top: 40px;
+        }
+
+        footer p {
+            color: #ffffff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .contact-info {
+                flex-direction: column;
+            }
+
+            main {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+       
+    </header>
+
+    <main>
+        <section id="contact-info">
+            <!-- <h2>Get in Touch</h2> -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <p>ABC@gmail.com</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <p>+92 3702141996 <br> +92 3292565633</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Address</h3>
+                    <p>meer alam road <br>baldia town karachi, Pakistan</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-form">
+            <h2>Send Us a Message</h2>
+            <form id="contactForm">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025  premium Watches. A fictional product for demonstration purposes.</p>
+    </footer>
+
+    <script>
+        // Simple JavaScript for form handling and validation
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Basic validation
+            if (name === '' || email === '' || message === '') {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Simple email validation (basic regex)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Simulate form submission (in a real app, send to server)
+            alert('Thank you, ' + name + '! Your message has been sent. We\'ll get back to you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

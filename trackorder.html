@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order Form</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #1a1a1a; 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 800px;
+            border: 2px solid #1DB954; 
+        }
+
+        h1 {
+            text-align: center;
+            color: #1DB954; 
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #1DB954; 
+            border-radius: 5px;
+            background-color: #000000; 
+            color: #ffffff; 
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #1DB954;
+            box-shadow: 0 0 5px rgba(29, 185, 84, 0.5); 
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1DB954; 
+            color: #000000; 
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1ed760; 
+        }
+
+        button:disabled {
+            background-color: #333333;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: #ff6b6b; 
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .tracking-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            text-align: center;
+        }
+
+        .tracking-success {
+            background-color: #1DB954; 
+            color: #000000;
+        }
+
+        .tracking-error {
+            background-color: #ff6b6b; /* Red for errors */
+            color: #ffffff;
+        }
+
+        .status-details {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .status-item {
+            margin-bottom: 5px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #1DB954;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Track Your Order</h1>
+        <form id="trackForm">
+            <label for="orderId">Order ID:</label>
+            <input type="text" id="orderId" name="orderId" placeholder="Enter your order number (e.g., ORD-12345)" required>
+            <div class="error" id="orderIdError">Please enter a valid order ID.</div>
+
+            <label for="email">Email (Optional, for verification):</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com">
+
+            <button type="submit" id="trackBtn">Track Order</button>
+
+            <div id="trackingResult" class="tracking-result">
+                <!-- Results will be inserted here -->
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Simple JavaScript for form validation and simulated tracking
+        document.getElementById('trackForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Clear previous errors and results
+            clearErrors();
+            hideResult();
+
+            let isValid = true;
+
+            // Validate order ID (must be non-empty and at least 5 characters)
+            const orderId = document.getElementById('orderId').value.trim();
+            if (orderId === '' || orderId.length < 5) {
+                showError('orderIdError', 'Please enter a valid order ID (at least 5 characters).');
+                isValid = false;
+            }
+
+            // Optional email validation if provided
+            const email = document.getElementById('email').value.trim();
+            if (email !== '') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showError('emailError', 'Please enter a valid email address.'); // Note: Add <div class="error" id="emailError"></div> if needed
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                // Simulate tracking (in a real app, send to server API)
+                document.getElementById('trackBtn').disabled = true;
+                document.getElementById('trackBtn').textContent = 'Tracking...';
+
+                // Mock tracking data based on order ID (simple simulation)
+                const mockStatus = getMockTrackingStatus(orderId);
+
+                setTimeout(() => {
+                    displayTrackingResult(mockStatus);
+                    document.getElementById('trackBtn').disabled = false;
+                    document.getElementById('trackBtn').textContent = 'Track Order';
+                }, 1500);
+            }
+        });
+
+        function getMockTrackingStatus(orderId) {
+            const lastDigit = orderId.slice(-1);
+            const statuses = [
+                { status: 'Order Confirmed', details: 'Your order has been received and is being processed.' },
+                { status: 'Preparing for Shipment', details: 'Items are being packed and prepared.' },
+                { status: 'Shipped', details: 'Your order is on the way! Estimated delivery: 2-3 days.' },
+                { status: 'Delivered', details: 'Your order has been successfully delivered.' },
+                { status: 'Issue Detected', details: 'There was a delay. Contact support for details.' }
+            ];
+            const index = parseInt(lastDigit) % statuses.length;
+            return statuses[index];
+        }
+
+        function displayTrackingResult(status) {
+            const resultDiv = document.getElementById('trackingResult');
+            if (status.status === 'Issue Detected') {
+                resultDiv.className = 'tracking-result tracking-error';
+                resultDiv.innerHTML = `
+                    <h3>Oops! Tracking Issue</h3>
+                    <p>${status.details}</p>
+                    <p>Please contact customer service.</p>
+                `;
+            } else {
+                resultDiv.className = 'tracking-result tracking-success';
+                resultDiv.innerHTML = `
+                    <h3>Order Status: ${status.status}</h3>
+                    <div class="status-details">
+                        <div class="status-item">${status.details}</div>
+                    </div>
+                `;
+            }
+            resultDiv.style.display = 'block';
+        }
+
+        function showError(errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(error => {
+                error.style.display = 'none';
+                error.textContent = '';
+            });
+        }
+
+        function hideResult() {
+            document.getElementById('trackingResult').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+    

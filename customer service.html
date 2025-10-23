@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Form</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #1a1a1a; 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #1DB954; 
+        }
+
+        h1 {
+            text-align: center;
+            color: #1DB954; 
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #1DB954; 
+            border-radius: 5px;
+            background-color: #000000; 
+            color: #ffffff; 
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1DB954;
+            box-shadow: 0 0 5px rgba(29, 185, 84, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1DB954; 
+            color: #000000; 
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1ed760; 
+        }
+
+        button:disabled {
+            background-color: #333333;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .success {
+            color: #1DB954;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 10px;
+            display: none;
+        }
+        footer {
+            background-color: #000000;
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #1DB954;
+            margin-top: 40px;
+        }
+
+        footer p {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Customer Care Center</h1>
+        <form id="customerForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <div class="error" id="nameError">Please enter your full name.</div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error" id="emailError">Please enter a valid email address.</div>
+
+            
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <div class="error" id="messageError">Please enter your message.</div>
+
+            <button type="submit" id="submitBtn">Submit</button>
+            <div class="success" id="successMsg">Thank you! Your message has been sent. We'll get back to you soon.</div>
+        </form>
+    </div>
+    <!-- <footer>
+        <p>&copy; 2025  premium Watches. A fictional product for demonstration purposes.</p>
+    </footer> -->
+
+
+    <script>
+        // Simple JavaScript for form validation and submission handling
+        document.getElementById('customerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Clear previous errors
+            clearErrors();
+
+            let isValid = true;
+
+            // Validate full name
+            const name = document.getElementById('fullName').value.trim();
+            if (name === '') {
+                showError('nameError', 'Please enter your full name.');
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '' || !emailRegex.test(email)) {
+                showError('emailError', 'Please enter a valid email address.');
+                isValid = false;
+            }
+
+            // Validate subject
+            const subject = document.getElementById('subject').value.trim();
+            if (subject === '') {
+                showError('subjectError', 'Please enter a subject.');
+                isValid = false;
+            }
+
+            // Validate message
+            const message = document.getElementById('message').value.trim();
+            if (message === '') {
+                showError('messageError', 'Please enter your message.');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Simulate submission (in a real app, send to server)
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').textContent = 'Submitting...';
+                
+                setTimeout(() => {
+                    document.getElementById('successMsg').style.display = 'block';
+                    document.getElementById('customerForm').reset();
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('submitBtn').textContent = 'Submit';
+                }, 1500);
+            }
+        });
+
+        function showError(errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(error => {
+                error.style.display = 'none';
+                error.textContent = '';
+            });
+        }
+    </script>
+</body>
+</html>

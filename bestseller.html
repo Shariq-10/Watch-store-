@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTS Watch Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: black;
+            color: #ffffff;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #000000;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1DB954;
+        }
+
+        .logo i {
+            font-size: 32px;
+            color: #1DB954;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #1DB954;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #282828;
+            border-radius: 30px;
+            padding: 8px 16px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: #eff3f1;
+            outline: none;
+            margin-left: 8px;
+            width: 180px;
+            min-width: 120px;
+        }
+
+        .btn {
+            background-color: #1DB954;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .btn:hover {
+            background-color: #1ed760;
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            font-size: 60px;
+            margin: 40px 0 30px;
+            text-align: center;
+            color: #1DB954;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            width: 100%;
+            background-color: #282828;
+            padding: 30px 40px;
+            border-radius: 20px;
+            display: flex;
+            transition: all 0.3s;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .card img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            flex: 0 0 250px;
+            gap: 15px;
+        }
+
+        .card-details h3 {
+            font-size: 28px;
+            color: #1DB954;
+            margin-bottom: 5px;
+        }
+
+        .card-details p {
+            font-size: 24px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .card-details .btn {
+            width: auto;
+            padding: 12px 24px;
+            align-self: flex-start;
+        }
+
+        .card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-des {
+            font-size: large;
+            line-height: 1.6;
+            color: #eff3f1;
+            margin: 0;
+        }
+
+        /* Responsive adjustments */
+         /* Enhanced Responsive Design */
+        /* Large screens (1200px+) - already handled by container */
+        @media (max-width: 1024px) {
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .watch-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
+
+            .featured-watch {
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .featured-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 60px; /* Reduce bottom padding on mobile */
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .logo {
+                justify-content: center;
+                font-size: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                font-size: 16px;
+            }
+
+            .header-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .search-bar input {
+                width: 120px;
+            }
+
+            .btn {
+                width: 100px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+
+            .hero {
+                min-height: 40vh;
+                padding: 40px 0;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                padding: 0 10px;
+            }
+
+            .categories {
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .category-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .watch-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .watch-card {
+                padding: 15px;
+            }
+
+            .watch-name {
+                font-size: 16px;
+            }
+
+            .watch-price {
+                font-size: 16px;
+            }
+
+            .watch-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .watch-actions button {
+                margin: 0;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .featured {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .featured-watch {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .mub {
+                align-self: center;
+            }
+
+            .featured-image {
+                width: 100%;
+                max-width: 200px;
+                height: auto;
+                aspect-ratio: 1;
+            }
+
+            .featured-details h2 {
+                font-size: 20px;
+            }
+
+            .featured-details p {
+                font-size: 14px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-column {
+                min-width: auto;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+                gap: 5px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .search-bar {
+                padding: 6px 12px;
+            }
+
+            .search-bar input {
+                width: 100px;
+                font-size: 12px;
+            }
+
+            .btn {
+                width: 80px;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .categories {
+                gap: 5px;
+            }
+
+            .category-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .watch-grid {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+                gap: 20px;
+            }
+
+            .watch-card {
+                padding: 12px;
+            }
+
+            .watch-name {
+                font-size: 14px;
+            }
+
+            .watch-price {
+                font-size: 14px;
+            }
+
+            .featured-watch {
+                padding: 15px;
+            }
+
+            .featured-details h2 {
+                font-size: 18px;
+            }
+
+            .featured-details p {
+                font-size: 13px;
+            }
+
+            .footer-column h3 {
+                font-size: 16px;
+            }
+
+            .footer-column a {
+                font-size: 14px;
+            }
+
+            .social-icons a {
+                font-size: 18px;
+            }
+
+            .copyright p {
+                font-size: 12px;
+                padding: 0 10px;
+            }
+        }
+
+        /* Hide search bar on very small screens if needed */
+        @media (max-width: 480px) {
+            .search-bar {
+                display: none; /* Optional: Hide search on tiny screens */
+            }
+        }
+
+        /* Hamburger menu for nav on mobile (basic implementation) */
+        @media (max-width: 768px) {
+            nav {
+                position: relative;
+            }
+
+            nav ul {
+                display: none; /* Hide by default on mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #000;
+                padding: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            }
+
+            nav ul.active {
+                display: flex; /* Show when active */
+            }
+
+            /* Add hamburger button */
+            .hamburger {
+                display: block;
+                font-size: 24px;
+                color: #fff;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            /* Insert hamburger in HTML via JS or manually */
+        }
+    
+        
+        .card:hover {
+            background: #282828;
+            transform: translateY(-5px);
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            color: #b3b3b3;
+            padding-top: 40px;
+            border-top: 1px solid #282828;
+        }
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAe1BMVEUAAAD////39/f8/PwjIyP4+Phvb28EBATIyMj09PS0tLSEhIQgICC8vLygoKC5ubl+fn4xMTHt7e3R0dESEhJPT0+Tk5MaGhrS0tLd3d0/Pz+KiophYWFoaGg3Nzd4eHijo6OXl5fm5uZVVVVRUVErKytDQ0NISEhbW1vTPBscAAAL40lEQVR4nO1caXuyOhAlBAwguFAUEa1o66v//xfemUQkEbFuUHqfOR+6KJAcZp8ELItAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIEiI/XK5nKa/PY1WkKwLz4uKfLP6ns2+Zp+f+zAR4rdn9T7kGfc2zsWH4n/DMAzYblL9mybJ782lFeTMHcg/9sNgEfucM+b68SIaDT5/eWbvgLCSjEX417SIWR1ZMLjU3b+Gfczm+CsCyfFLflx+sgtWvz3LpyEsx2YT+DU3idW4cm+gjv972LECfnp1SplXbPP5fDT2Mn4iuf7luT6Fgi3g54cuPlTL0cE4ar/aej58bgdL648JcskYuMtAkyBYXnbd6qa554Ln2XQ8xRfhsbFlrUwXg36nSUyrwGdu8YeipcPYFE1Rl+DXD+ccI8aiZSfTewPmLLOsta6j7HjbzOSXk4x9/Otmhq9iwbaGm2H4/z34HLPF7C/4HJeBz9RtML7vPGS29Rf9l+OScWEd9EiRP3L6MPambU3tTVijzIY6wwcvMNgFrUzsbRiioxlpSpo9dDrq6iabYxnZzvxexxwTmkJjOH7iIpOPHidzW/aBCc3DnlSD9Dnj3tZXOapl8RJDiaRAD9VHVd2wnWXUTfNnrzQrDj8f9Av4Zj7SfFmGiE3eRylOGUutT43h875fWGk+e+PU3gUf82wtp/l46Wrfg/7FjQVaXlYx9F9TNLHuXW+uYJ7pTMMXLobyW6LD6ZMc18y2rC+tehq+esXkkPaKocXYDK3xDO+1yyG3/St68G4IqA0LI6tx33DVPi0JCMi9Y1TTCq/3mXqlo3C/GcYLrVGzOE3x/nmejrwvToiG/1qMMh6uWeSaEMua9jAA3HWJJRy4Saxk8DNqwSQ9rNerdlsFK8bBbHjlTcu0ZnyS6I/4lOfujdyoCaWrliI7FudI7C+27XXvYkxGr4REdD9cLUrdROjLYONgCng3Q8D2cqGrtVZzjtl3omVuhTKPwBTpdQi8Q/xRhnDWvLbKBYhX7fgpF8c1hSjODPlPBVXppB6SYZg1fB+0QnErW4jnQTgbGwzZ5NbJH2U+9AjDqc/4NRnCte4x/Mfhopy22kDS6IPzqKvm++qdz3mAYerWV2LPWLxfigLIcQvtSR9FY8h5ozcPKlk8wHDRIEE5GivezE8ixssOzuNyuSg8roZ199fuqzD6kPcznP9wTBt19ETGeW35ArNTvbkRX1WcXFe2+xm6zSoq0YopZljc7zXdwTDoaaPuLs+AkL0x5nU3w4n2bzWizrqNKnrJ2MBUH8zXtKLqSntjZboLx9p7FfRoEGufr80bB9edr/7NhpGxM+KFdlgzCgz7ejsDFzC+qnsskxtNVYU1u9A1syesC+qi5Kw8GmdZmaolOu/XmkVNiJHCVLuTOMxWv7OBlv+LUzLayHAI83d9foWho52jr5Jk1Vh3rvA9iCNja7PGQF0xtmjoyU2oa/BVhrbLuWvXGer5ebWeblp1GwQFhDZf6Ntq1Hq+kR1PznoqduwSlwy57fs+t2sMl9pNMz6PKrTB0MIEE6dylg3nyFi/41pyk9WTkhpDn7vcrzPUr9jY7WinHF7KVQttQViayUq69JLPAcYWmJTUUddS27d9jH3NdvhyY+8hCDTCf/qKMJeVE5qma58oug4SjK4QvCJD1/V9tyZDPQbx+3oI74MnvVikaeBcGijzpbYhUHMDdg0VQ2y1DRmoqM+lN71gaCjAbvt13lEuOuhhxTJG6FFxICn7dskQNFdPRpWoTYbCcZSncW2Vn10w3F7eGzfzgnywb50dAkxxBDKwNSkerMT6kB5D/eCZ9I/MdW2lujb8xq8UwzRMROiEImdcuRnb554VopxARPAtBBpjf5JGdDGaWa33IgdSakttZBtMM1kAK+U3bAQYl4+/UQflH/aJodgnwhHYIhiCI8XvfclQJPht4giROg1mrBC3krAZGElvs67GtGMnTdKMS27IR1oXx98u8HLxY/xOpsshyC8VYegkOYZ7iBf4rWeBUIG2Yzl7OASE2Ajw2q37VzC6ENPKslS0+Q7mJEA3UXQYxV1wkCg/jvKxXV9RkQwdAeoILGVeCq6Uy+MggIcgxDRx0jTBRt76Ron/8srJDxDoZ7BSKt0JeAt7BxNMMvSLmKegRiJDJtnhH0hDydBJSoZgh5I4HAwyBPcaSgGDHHGMzQ2CvGWKFuY2WIKe9tRyJJSl4CAyDPz+KYi70ia5lB/+YzIETczRlSJDuBMRMpQylBIE12UddtgcaSK5bdXdCGvvy31Dp7CI1uZmKbobtEqUqXKeaGC2wRDMD32lBZViMuRKgTWG4IMcOMRK0gQI5NcefFBC5M3Z3JvwqZIZlYRDagK+BfK3ED9A20MgVTbcSI+DDJnPgaFymegzMRPC884M0YcmoRAg5CRUMX4VlCRrwixaZmh9y7B4Kp3QUXKwTchUxjIoytjAXNClCWgauB0MfJxPLRntECIUQxU/8Wu0K6EiYogKLNKziJz1fOxluxrDdgpEHUdVHVZ1N2cxTrHQOiuFWcjXK+AzfvYcYjY3q5X2ExyoKHAbl/4Qho+upOyuKT1+G0M5pO55jm9ndAGBMV9R1DwA7rIoc4ExHvRWhsbVuiirjoqiXmhAQiesf3KpKarN6W6G81GJwty0KbRTnt5edzfAnR9VY0YrldQW6SQ7N8OeYqj1P8yeWrcMEQF6VLmoUY0sFxPH5cyeYqiXh5W5CfPRsm6K/+C0SqL137h5259iqCsF11Z99TYf+26Jkwk5FTS4tR6T42mVUj3F0MxJ49FxCmnU0Vzy5t1sWFHr+Di9g62PXvmHpxiKhoc49Y/baXrXoBjKSiM02qNFecRz0WLMfkRHD6yWBhNjqNcCI2eL5BWG4c3qUK5mdLSt6uwSOLq8qv8ESmV/yYDynJb+uELKll0zVLF/cLkAdrH89EBO491c5b69M6IdhioLnRruLkNNTTXlfSRrMx6Wu0Te2dY/o/ErCUXGvZexbMPLzx7KS4srRaG6l26Hz98Exsg25t1G8Jd1XyXGRxgKa9VQ4nthh5s3dYZxroxxGev3Xt3vdfwEQ7hbO1Z77P/ju9PdqXrcsq1vX83UjGaenE9RZ6jnYE3V01egC5Jn233Hu28nQYVCdqJi1NQB161RZZbT8TgyX9mzisYlohuFwn41L4IoCkaTUybaJcP6WCPV20guNlNc2xvStBO4X7iYJZaMvkpnJqYfLKzLTcyXW5qbKJbH9egWeEotkw/m6n7o2a2vSQ+fd5uoggrjYGWLjD35UHfSx4dPncXpdURjM/WKpk8oW9rLB/owEHhojV/muyZY8Hgv/rjFXnr/AGLk8rH9nJnJVxE++NzEFgJJD1+wIaQzzdDyhJG7ohwfk0gGZUQfn8oEJNGp77b8YKYgH3npyScW8z+9SeXXAFZoy57fcaczRL+KPYi7dNVjobXs6as1kACU6jvZ8BzEhqbiJpm7nM4ad3x2tMvkOaAVelIEm/iy3pPvzLotyJlc/eimu/00lpCiRtK5bIxuHAYPf3y7Y7bmLva8gz4GRB2zrHSg64zVCveo9qbJEuiqcL/Ad/sbaF7GCjnK0unbLDoUdsWgbpT/Aln6Qlba+/fbSKD0AllDhUVt6zDCXxT56iBdSro85tHJMxWWdeiou/0yjsDRU6F7cKOPZm4wkZsEu1mCeREyT/sHGpqpRme6rW+RrnFVBIvWNwe9E2HBmVuo6PY5anr67gzc7DG0e1laNEC9UAn846ljPc1vtX0XWPpOWnk4pmVM0dVEZSD8Gi2ueR7Xk9YXsJ4mbLcgH18eQySIzsX752bkZVXLA9yq+urox38iUFzHERuhi7kuomQ5+/o+nDuO4HyLzqf1XnzOF/hG1+21rT//ipiNu+7+toLZ3ANZ+lmwHXz/26dJ4iy/JsUCqmfZIfj7BCWSWV6UL+lF7Lzt333n8m0k+6nTo1eeEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAh9xH8Xj4zs9ijOCwAAAABJRU5ErkJggg==" alt="" height="60px"></i>
+                    <span>Premium</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="project.html">Home</a></li>
+                        <li><a href="collection.html">Collections</a></li>
+                        <li><a href="bestseller.html">Best Sellers</a></li>
+                        <li><a href="onsale.html">On Sale</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search watches...">
+                    </div>
+                    <button class="btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Best Sellers</h2>
+        
+        <div class="cards-grid">
+            <!-- Card 1: G-Shock -->
+            <div class="card">
+                <div class="card-details">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbDcKFE_6ufrFNSP5Rt3i8y3wccqvmkxb3PQ&s" alt="G-Shock Watch">
+                    <h3>G-Shock Classic</h3>
+                    <p>$2500</p>
+                    <button class="btn">Buy Now</button>
+                </div>
+                <div class="card-info">
+                    <p class="card-des">A Casio G-Shock Classic Octagon Series watch composed of a carbon reinforced resin case and resin strap with a buckle clasp. This black watch has a black dial with luminescent hands and LCD digital displays, all of which are powered by a quartz movement. Mineral crystal also protects the dial and allows a 200 metre water resistance. Accuracy +/- 15 seconds per month. Automatic calendar. Once set, the automatic calendar always displays the correct date. Button tones on/off. Watch will not beep when switching from one function to another. Preset alarm or countdown timers remain active when the button tones are deactivated. Carbon-reinforced resin casing. Combining resin with robust carbon creates a casing that is even more stress resistant offering even greater protection with an extremely high level of durability. 5 daily alarms. Hand moving function. With a push of a button, hands move away to permit free visibility. LED light. Neo-display. A luminous coating provides long-term illumination in the dark after only a short exposure to light. Shock-resistant. Shock-resistant construction protects against impact and vibration. Stopwatch function. Timer - 1/1 min. - 24 hours. Countdown timers help you to remember specific or recurring events by giving off an audible signal at a preset time.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Rolex Submariner (Placeholder Image) -->
+            <div class="card">
+                <div class="card-details">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpyVA5gWADBmREioknciVRtRyRmzs6s-OMRA&s" alt="Rolex Submariner">
+                    <h3>Rolex Submariner</h3>
+                    <p>$9500</p>
+                    <button class="btn">Buy Now</button>
+                </div>
+                <div class="card-info">
+                    <p class="card-des">The iconic Rolex Submariner is the ultimate dive watch, featuring a stainless steel case, unidirectional rotatable bezel, and luminous markers for low-light visibility. Powered by Rolex's precision automatic movement, it offers 300 meters of water resistance. This timeless piece combines luxury craftsmanship with rugged durability, making it a favorite among adventurers and collectors alike. Ceramic bezel insert for enhanced scratch resistance. Sapphire crystal for superior clarity and protection. Date window with Cyclops lens for magnified readability.Most collectors agree these original 40mm Submariner 16610LV 'Kermits' will continue to provide excellent financial returns in the coming years.Prices for the green aluminium bezel Sub Date has more than doubled in the last 5 years, as collectors scramble to secure perfect full set examples like this one. Retailed in 2008, this final series with "RRR" engraved rehaut bezel, and correct 2008 year code '93250' Oyster Fliplock bracelet, is offered with newer style Rolex box, warranty card and Submariner instruction booklets. </p>
+                </div>
+            </div>
+
+            <!-- Card 3: Omega Speedmaster (Placeholder Image) -->
+            <div class="card">
+                <div class="card-details">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8vIHF4WCQ6-kJPOC78rHEJqdXOONv8G37AA&s" alt="Omega Speedmaster">
+                    <h3>Omega Speedmaster</h3>
+                    <p>$6200</p>
+                    <button class="btn">Buy Now</button>
+                </div>
+                <div class="card-info">
+                    <p class="card-des">Known as the Moonwatch, the Omega Speedmaster Professional is a chronograph with a storied history in space exploration. It features a manual-winding movement, tachymeter scale on the bezel, and a black dial with applied indices. Hesalite crystal adds to its vintage appeal, while the stainless steel bracelet ensures comfort and style. Water resistant to 50 meters. Iconic design that blends heritage with modern precision. Ideal for timing events or as a statement of elegance. The Dark Side of the Moon series is a testament to Omega's relentless pursuit of excellence in watchmaking. It pays homage to the Apollo 8 astronauts who ventured to the dark side of the moon, where the lunar surface is unilluminated by sunlight. This series introduced a range of timepieces characterized by their sleek, black ceramic cases and exceptional technical prowess.The Blue Side of the Moon is a natural progression within this collection. It draws its inspiration from the dark blue sky, symbolizing the vastness of space beyond our planet. This watch marks Omega's first foray into using blue ceramic, a material that requires precision and innovation to create. Furthermore, it stands out as the inaugural Moonphase edition of the Dark Side series, adding a celestial touch to an already iconic line of watches.</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Apple Watch Ultra (Placeholder Image) -->
+            <div class="card">
+                <div class="card-details">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQeLWhB_bg5OAqaZHlOnO5MmTzZ94NkEYmSw&s" alt="Apple Watch Ultra">
+                    <h3>Apple Watch Ultra</h3>
+                    <p>$800</p>
+                    <button class="btn">Buy Now</button>
+                </div>
+                <div class="card-info">
+                    <p class="card-des">The Apple Watch Ultra redefines rugged smartwatch design with its titanium case, larger display, and advanced fitness tracking. Dive up to 100 meters with the Oceanic+ app integration. Features include GPS, heart rate monitoring, blood oxygen sensing, and up to 36 hours of battery life. Customizable Action button for quick access to functions. Precision dual-frequency GPS for accurate location tracking during outdoor adventures. Seamless integration with iOS ecosystem.Apple Watch Ultra is powered by watchOS 9, which includes new advanced running metrics to measure performance, like Stride Length, Ground Contact Time, Vertical Oscillation, and Running Power. New Workout Views, such as Segments, Splits, and Elevation, provide important metrics at just a glance, and thanks to the larger display, Apple Watch Ultra is the only Apple Watch that can show six metrics at once. Users can take their training to the next level with features such as Heart Rate Zones, Custom Workouts, Pacer, and, coming later this year, Race Route. For triathlons, duathlons, or activities with any sequence of swimming, biking, or running, the new Multisport workout includes autodetection to easily switch between workouts. Apple Watch Ultra has enough battery life for most users to complete a long-course triathlon, consisting of a 2.4-mile swim, 112-mile bike ride, and full marathon at 26.2 miles.</p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+                <p>&copy; 2025  premium Watches. A fictional product for demonstration purposes.</p>
+            </div>
+    </div>
+</body>
+</html>
